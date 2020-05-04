@@ -55,11 +55,8 @@ const postMutation = (req, res) => {
         let findType = req.body.text.length;
         let determineType = findType ? 'insert' : 'delete';
         let mutation = createMutation(req, res, determineType, state);
-        author = mutation.author;
-        console.log(author);
 /* Before we update the conversation, we must compare the convo state to the mutation state */
-        let compare = operationalTransformation.compareMutationWithConversation(mutation.conversationId, mutation.conversationState);
-        console.log(compare);
+        operationalTransformation.compareMutationWithConversation(mutation.author, mutation.conversationId, mutation.conversationState);
       };
     });
     //updateConversation(req.body.conversationId, req, res);

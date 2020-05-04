@@ -16,7 +16,7 @@ app.use(cors()); // the backend should accept requests cross-origin requests
 //   'useUnifiedTopology': true
 // });
 
-Heroku deploy
+// Heroku deploy
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
