@@ -24,9 +24,9 @@ const getInfo = (req, res) => {
       'language': 'node.js',
       'source': '',
       'answers': {
-        '1': 'I approached the problem...',
-        '2': 'If I had more time, I would add...',
-        '3': 'What would you remove / add in the challenge if you were in the hiring side?'
+        '1': '',
+        '2': '',
+        '3': ''
       }
     });
 };
@@ -40,10 +40,27 @@ const postMutation = (req, res) => {
       } else {
         res.status(200).send(doc);
       }
+      // else {
+      //   updateConversation(newConversation._id, req, res);
+      // };
     });
   } else {
-    updateConversation(req.body.conversationId, req, res);
-  }
+    /* Find the existing conversation, get it's state, and set the state to the state of the mutation */
+    Conversation.findById(req.body.conversationId, (error, conversation) => {
+      if(error){
+        console.log(error);
+      } else {
+        operationalTransformation.setState(conversation.state);
+        let state = operationalTransformation.getState();
+        let findType = req.body.text.length;
+        let determineType = findType ? 'insert' : 'delete';
+        let mutation = createMutation(req, res, determineType, state);
+/* Before we update the conversation, we must compare the convo state to the mutation state */
+        operationalTransformation.compareMutationWithConversation(mutation.author, mutation.conversationId, mutation.conversationState);
+      };
+    });
+    //updateConversation(req.body.conversationId, req, res);
+  };
 };
 
 const updateConversation = (id, req, res) => {
@@ -68,7 +85,7 @@ const updateConversation = (id, req, res) => {
   });
 };
 
-const createMutation = (req, res, type, origin) => {
+const createMutation = (req, res, type, state) => {
   let newMutation = new Mutation({
       author: req.body.author,
       conversationId: req.body.conversationId,
@@ -76,18 +93,16 @@ const createMutation = (req, res, type, origin) => {
       length: req.body.length,
       text: req.body.text,
       type: type,
-      alice: origin[1],
-      bob: origin[0]
+      conversationState: state
   });
-  newMutation.save((error, doc) => {
+  newMutation.save((error, mutation) => {
     if(error){
-      res.send(error);
-      //res.status(400).send(error);
+      res.status(400).send(error);
     } else {
-      res.send(doc);
-      //res.status(200).send(doc);
+      res.status(200).send(mutation);
     };
   });
+  return newMutation;
 };
 
 const getConversations = (req, res) => {
