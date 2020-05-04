@@ -1,7 +1,8 @@
 {
-  "name": "collaborative-editing-system",
+  "name": "collaborative-editing-system-frontend",
   "scripts": {
-    "start": "react-scripts start"
+    "start": "react-scripts start",
+    "build": "react-scripts build"
   },
   "dependencies": {
     "react": "^16.13.1",
