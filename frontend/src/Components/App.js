@@ -15,7 +15,8 @@ export default class App extends React.Component{
     conversation: {}
   };
   updateState = () => {
-    axios.get(BASE_URL + '/conversations')
+    axios.get('/conversations')
+    // axios.get(BASE_URL + '/conversations')
       .then((res) => {
         this.setState({conversations: res.data});
         console.log(res);
