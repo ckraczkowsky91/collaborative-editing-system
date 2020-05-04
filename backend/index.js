@@ -10,10 +10,27 @@ app.use(express.json()); // to handle JSON-encoded request bodies for POST reque
 app.use(cors()); // the backend should accept requests cross-origin requests
 var port = 2000;
 
+
+// Local deploy
+/*
 mongoose.connect('mongodb://127.0.0.1:27017/ava_challenge', {
   'useNewUrlParser': true,
   'useUnifiedTopology': true
 });
+ */
+
+// Heroku deploy
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+  }, function (err, res) {
+      if (err) {
+      console.log (err);
+      } else {
+      console.log ('Successfully connected to MongoDB!');
+      }
+    }
+  );
 
 routes(app);
 
