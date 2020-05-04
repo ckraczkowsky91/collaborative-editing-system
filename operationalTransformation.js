@@ -12,7 +12,7 @@ const getState = () => {
   return state;
 };
 
-const compareMutationWithConversation = (conversationId, mutationState) => {
+const compareMutationWithConversation = (author, conversationId, mutationState) => {
   Conversation.findById(conversationId, (error, conversation) => {
     if(error){
       console.log(error);
