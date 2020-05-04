@@ -24,9 +24,9 @@ const getInfo = (req, res) => {
       'language': 'node.js',
       'source': '',
       'answers': {
-        '1': '',
-        '2': '',
-        '3': ''
+        '1': 'I approached the problem...',
+        '2': 'If I had more time, I would add...',
+        '3': 'What would you remove / add in the challenge if you were in the hiring side?'
       }
     });
 };
