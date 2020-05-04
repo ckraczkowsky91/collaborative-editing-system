@@ -1,9 +1,11 @@
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const routes = require('./routes');
 
 var app = express();
+app.use(express.static(path.join(__dirname, 'frontend/build')));
 app.use(express.json()); // to handle JSON-encoded request bodies for POST requests, with the appropriate header "Content-type: application/json".
 app.use(cors()); // the backend should accept requests cross-origin requests
 var port = 2000;
