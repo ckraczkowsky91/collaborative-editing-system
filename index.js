@@ -5,19 +5,18 @@ const mongoose = require('mongoose');
 const routes = require('./routes');
 
 var app = express();
-const port = process.env.PORT
-//const port = 4000;
+const port = process.env.PORT || 4000;
 app.use(express.static(path.join(__dirname, 'frontend/build')));
 app.use(express.json()); // to handle JSON-encoded request bodies for POST requests, with the appropriate header "Content-type: application/json".
 app.use(cors()); // the backend should accept requests cross-origin requests
 
-// Local deploy
+/* Local deploy */
 // mongoose.connect('mongodb://127.0.0.1:27017/ava_challenge', {
 //   'useNewUrlParser': true,
 //   'useUnifiedTopology': true
 // });
 
-// Heroku deploy
+/* Heroku deploy */
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -33,7 +32,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 routes(app);
 
 app.listen(port, () => {
-  console.log('App is running');
+  console.log(`App is running on port ${port}`);
 });
 
 app.get('*', (req, res) => {

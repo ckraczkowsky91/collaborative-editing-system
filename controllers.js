@@ -105,11 +105,12 @@ const getConversations = (req, res) => {
 };
 
 const getConversation = (req, res) => {
-  Conversation.findById(req.body.conversationId, (error, doc) => {
+  let id = req.params.conversationId || req.body.conversationId;
+  Conversation.findById(id, (error, doc) => {
     if(error){
       res.status(400).send(error);
     } else {
-      // res.status(200).send(doc);
+      console.log(doc);
       res.status(201).send({
         'msg': 'Mutation applied to conversation',
         'ok': true,
